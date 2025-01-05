@@ -1,4 +1,9 @@
 from tools.weather_tools import get_weather, get_temperature
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+API_KEY = os.getenv("WEATHER_API_KEY")
 
 TOOL_CONFIG = [
     {
@@ -15,7 +20,7 @@ TOOL_CONFIG = [
             "required": ["location"],
             "additionalProperties": False,
         },
-        "function": get_weather,
+        "function": lambda location: get_weather(location, API_KEY),
     },
     {
         "name": "get_temperature",
@@ -31,6 +36,6 @@ TOOL_CONFIG = [
             "required": ["location"],
             "additionalProperties": False,
         },
-        "function": get_temperature,
+        "function": lambda location: get_temperature(location, API_KEY),
     },
 ]

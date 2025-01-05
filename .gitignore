@@ -1,0 +1,7 @@
+project_export.txt
+tool_calls.log
+todos.md
+.env
+venv
+__pycache__/
+*.pyc

@@ -1,6 +1,6 @@
 from typing import Any, Dict, Callable, List
 
-from logging_config import setup_logging
+from src.logging_config import setup_logging
 
 logger = setup_logging()
 

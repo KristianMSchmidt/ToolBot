@@ -1,9 +1,9 @@
-from chatbot.tool_manager import ToolManager
-from chatbot.chatbot import ChatBot
-from tools.tool_config import TOOL_CONFIG  # type: ignore
-from helpers.authenticate import get_client
+from src.chatbot.tool_manager import ToolManager
+from src.chatbot.chatbot import ChatBot
+from src.tools.tool_config import TOOL_CONFIG  # type: ignore
+from src.helpers.authenticate import get_client
 
-if __name__ == "__main__":
+def main():
     # Initialize ToolManager with the tool configuration
     tool_manager = ToolManager(tool_config=TOOL_CONFIG)
 
@@ -19,3 +19,7 @@ if __name__ == "__main__":
             break
         response = chatbot.process_user_input(user_input)
         print(f"Assistant: {response}")
+
+# This ensures the file can still be run directly
+if __name__ == "__main__":
+    main()

@@ -1,6 +1,6 @@
-from tools.weather_tools import get_weather, get_temperature
 import os
 from dotenv import load_dotenv
+from src.tools.weather_tools import get_weather, get_temperature
 
 load_dotenv()
 API_KEY = os.getenv("WEATHER_API_KEY")

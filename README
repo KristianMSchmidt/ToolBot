@@ -1,0 +1,5 @@
+# Run project
+python -m src.main or python run.py
+
+# Run tests
+python -m pytest src/pytests

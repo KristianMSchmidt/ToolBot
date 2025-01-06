@@ -1,5 +1,6 @@
 from src.chatbot.tool_manager import ToolManager
 
+
 # Test the initialization of ToolManager
 def test_tool_manager_initialization():
     tool_config = [
@@ -20,6 +21,7 @@ def test_tool_manager_initialization():
     # Check if the function is mapped
     assert "test_tool" in tool_manager.function_map
 
+
 # Test the define_tool method
 def test_define_tool():
     tool_manager = ToolManager([])
@@ -37,6 +39,7 @@ def test_define_tool():
     assert tool_manager.tools[0]["function"]["name"] == "new_tool"
     assert "new_tool" in tool_manager.function_map
 
+
 # Test call_function success case
 def test_call_function_success():
     tool_manager = ToolManager([])
@@ -53,6 +56,7 @@ def test_call_function_success():
     result = tool_manager.call_function("test_tool", {"x": "World"})
     assert result == "Hello, World"
 
+
 # Test call_function when the function is not registered
 def test_call_function_unregistered():
     tool_manager = ToolManager([])
@@ -60,6 +64,7 @@ def test_call_function_unregistered():
     # Call a non-existent function
     result = tool_manager.call_function("non_existent_tool", {})
     assert "Error: Function 'non_existent_tool' is not registered." in result
+
 
 # Test call_function exception handling
 def test_call_function_exception_handling():

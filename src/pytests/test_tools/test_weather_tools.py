@@ -9,9 +9,8 @@ MOCK_WEATHER_RESPONSE = {
     }
 }
 
-MOCK_ERROR_RESPONSE = {
-    "error": "Error fetching weather data: 404"
-}
+MOCK_ERROR_RESPONSE = {"error": "Error fetching weather data: 404"}
+
 
 # Test get_weather function
 def test_get_weather_success():

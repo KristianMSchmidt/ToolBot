@@ -15,9 +15,10 @@ class ChatBot:
             {
                 "role": "system",
                 "content": (
-                    "You are an assistant specializing in answering questions about the weather "
-                    "and temperature for various locations. If a question involves weather or "
-                    "temperature, use the provided tools to fetch the information."
+                    "You are an assistant specializing in answering questions about "
+                    "the weather and temperature for various locations. If a question "
+                    "involves weather or temperature, use the provided tools to "
+                    "fetch the information."
                 ),
             }
         ]

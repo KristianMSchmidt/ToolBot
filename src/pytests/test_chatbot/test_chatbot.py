@@ -1,5 +1,5 @@
 import json
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 from src.chatbot.chatbot import ChatBot
 from src.chatbot.tool_manager import ToolManager
 
@@ -31,6 +31,7 @@ def test_add_message():
     assert chatbot.chat_history[2]["content"] == "Hi there!"
     assert chatbot.chat_history[2]["tool_call_id"] == "123"
 
+
 def test_handle_tool_calls():
     mock_tool_manager = MagicMock(spec=ToolManager)
     mock_tool_manager.call_function.return_value = "Sunny in New York"
@@ -56,6 +57,7 @@ def test_handle_tool_calls():
     mock_tool_manager.call_function.assert_called_once_with(
         "get_weather", {"location": "New York"}
     )
+
 
 def test_process_user_input_when_no_tool_calls_in_response():
     # Mock ToolManager
@@ -87,6 +89,7 @@ def test_process_user_input_when_no_tool_calls_in_response():
     assert chatbot.chat_history[2]["role"] == "assistant"
     assert chatbot.chat_history[2]["content"] == "Hello!"
 
+
 def test_process_user_input_when_tool_calls_in_response():
     # Mock ToolManager
     mock_tool_manager = MagicMock(spec=ToolManager)
@@ -99,16 +102,21 @@ def test_process_user_input_when_tool_calls_in_response():
     mock_message.tool_calls = [
         MagicMock(
             function=MagicMock(
-                name="get_weather",
-                arguments=json.dumps({"location": "New York"})
+                name="get_weather", arguments=json.dumps({"location": "New York"})
             ),
-            id="tool_call_1"
+            id="tool_call_1",
         )
     ]
     mock_message.content = None  # No immediate content; requires tool processing
     mock_client.chat.completions.create.side_effect = [
         MagicMock(choices=[MagicMock(message=mock_message)]),
-        MagicMock(choices=[MagicMock(message=MagicMock(content="Weather fetched: Sunny in New York"))]), 
+        MagicMock(
+            choices=[
+                MagicMock(
+                    message=MagicMock(content="Weather fetched: Sunny in New York")
+                )
+            ]
+        ),
     ]
 
     # Initialize ChatBot with mocks
@@ -126,4 +134,3 @@ def test_process_user_input_when_tool_calls_in_response():
     assert chatbot.chat_history[1]["content"] == "What's the weather in New York?"
     assert "Sunny in New York" in chatbot.chat_history[3]["content"]
     assert chatbot.chat_history[4]["content"] == "Weather fetched: Sunny in New York"
-

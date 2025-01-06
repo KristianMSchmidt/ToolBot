@@ -17,8 +17,11 @@ def get_current_weather(location: str, api_key: str) -> dict:
     base_url = "http://api.weatherapi.com/v1/current.json"
 
     try:
-        response = requests.get(base_url, params={"key": api_key, "q": location})
-        response.raise_for_status()  # Raise an HTTPError for bad responses (4xx and 5xx)
+
+        response = requests.get(
+            base_url, params={"key": api_key, "q": location}, timeout=10
+        )
+        response.raise_for_status()
         data = response.json()
         return data.get("current", {})
     except requests.RequestException as e:

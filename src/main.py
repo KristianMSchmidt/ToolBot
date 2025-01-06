@@ -4,8 +4,6 @@ from src.tools.tool_config import TOOL_CONFIG  # type: ignore
 from src.helpers.authenticate import get_client
 
 
-
-
 def main():
     """
     Main entry point for the chatbot application.
@@ -38,6 +36,7 @@ def main():
             break
         response = chatbot.process_user_input(user_input)
         print(f"Assistant: {response}")
+
 
 # This ensures the file can still be run directly
 if __name__ == "__main__":

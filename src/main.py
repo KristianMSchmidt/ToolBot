@@ -5,6 +5,7 @@ from src.helpers.authenticate import get_client
 
 
 
+
 def main():
     """
     Main entry point for the chatbot application.

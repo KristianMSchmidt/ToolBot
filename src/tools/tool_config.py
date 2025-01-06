@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 from src.tools.weather_tools import get_current_weather
 
 load_dotenv()
+
+
 API_KEY = os.getenv("WEATHER_API_KEY")
 
 TOOL_CONFIG = [
@@ -22,5 +24,4 @@ TOOL_CONFIG = [
         },
         "function": lambda location: get_current_weather(location, API_KEY),
     },
-
 ]

@@ -8,7 +8,9 @@ def test_chatbot_initialization():
     mock_tool_manager = MagicMock(spec=ToolManager)
     mock_client = MagicMock()
 
-    chatbot = ChatBot(tool_manager=mock_tool_manager, client=mock_client)
+    chatbot = ChatBot(
+        tool_manager=mock_tool_manager, client=mock_client, system_instruction=""
+    )
 
     # Check initial chat history
     assert len(chatbot.chat_history) == 1
@@ -19,7 +21,9 @@ def test_add_message():
     mock_tool_manager = MagicMock(spec=ToolManager)
     mock_client = MagicMock()
 
-    chatbot = ChatBot(tool_manager=mock_tool_manager, client=mock_client)
+    chatbot = ChatBot(
+        tool_manager=mock_tool_manager, client=mock_client, system_instruction=""
+    )
 
     chatbot.add_message("user", "Hello!")
     chatbot.add_message("assistant", "Hi there!", tool_call_id="123")
@@ -37,7 +41,9 @@ def test_handle_tool_calls():
     mock_tool_manager.call_function.return_value = "Sunny in New York"
 
     mock_client = MagicMock()
-    chatbot = ChatBot(tool_manager=mock_tool_manager, client=mock_client)
+    chatbot = ChatBot(
+        tool_manager=mock_tool_manager, client=mock_client, system_instruction=""
+    )
 
     # Create a mock tool_call object
     mock_tool_call = MagicMock()
@@ -74,7 +80,9 @@ def test_process_user_input_when_no_tool_calls_in_response():
     )
 
     # Initialize ChatBot with mocks
-    chatbot = ChatBot(tool_manager=mock_tool_manager, client=mock_client)
+    chatbot = ChatBot(
+        tool_manager=mock_tool_manager, client=mock_client, system_instruction=""
+    )
 
     # Simulate user input
     response = chatbot.process_user_input("Hi!")
@@ -120,7 +128,9 @@ def test_process_user_input_when_tool_calls_in_response():
     ]
 
     # Initialize ChatBot with mocks
-    chatbot = ChatBot(tool_manager=mock_tool_manager, client=mock_client)
+    chatbot = ChatBot(
+        tool_manager=mock_tool_manager, client=mock_client, system_instruction=""
+    )
 
     # Simulate user input
     response = chatbot.process_user_input("What's the weather in New York?")

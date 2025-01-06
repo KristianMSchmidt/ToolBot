@@ -8,23 +8,21 @@ class ChatBot:
     Handles chat interactions and manages the assistant's logic.
     """
 
-    def __init__(self, tool_manager: ToolManager, client: Any):
+    def __init__(self, tool_manager: ToolManager, client: Any, system_instruction: str):
+        """
+        Initialize the ChatBot with a tool manager, client, and system instruction.
+
+        Args:
+            tool_manager (ToolManager): The manager for tools the chatbot can use.
+            client (Any): The OpenAI API client instance.
+            system_instruction (str): The system instruction defining the chatbot's behavior.
+        """
         self.client = client
         self.tool_manager = tool_manager
-
         self.chat_history = [
             {
                 "role": "system",
-                "content": (
-                    "You are an assistant specializing in answering questions related "
-                    "to the weather for various locations. Your expertise includes not "
-                    "just providing weather facts, but also offering practical advice, "
-                    "such as the type of tires to use given the weather conditions. "
-                    "If a question involves weather or temperature, use the provided "
-                    "tools to fetch the information. Start with concise answers, "
-                    "avoiding excessive details, but let the user know you can "
-                    "provide more information if needed."
-                ),
+                "content": system_instruction,
             }
         ]
 

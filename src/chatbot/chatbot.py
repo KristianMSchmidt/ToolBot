@@ -15,7 +15,8 @@ class ChatBot:
         Args:
             tool_manager (ToolManager): The manager for tools the chatbot can use.
             client (Any): The OpenAI API client instance.
-            system_instruction (str): The system instruction defining the chatbot's behavior.
+            system_instruction (str): The system instruction defining the chatbot's
+                behavior.
         """
         self.client = client
         self.tool_manager = tool_manager

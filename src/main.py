@@ -1,7 +1,8 @@
 from src.chatbot.tool_manager import ToolManager
 from src.chatbot.chatbot import ChatBot
-from src.tools.tool_config import TOOL_CONFIG  # type: ignore
+from src.tools.tool_config import TOOL_CONFIG
 from src.helpers.authenticate import get_client
+from src.config.weather_bot_config import SYSTEM_INSTRUCTION, GREETING_MESSAGE
 
 
 def main():
@@ -13,27 +14,12 @@ def main():
 
     # Create the ChatBot with the client and system instruction
     client = get_client()
-    system_instruction = (
-        "You are an assistant specializing in questions about the current weather, "
-        "such as temperature, wind, or what to wear based on current conditions. "
-        "Your expertise is limited to providing details about the current weather "
-        "for various locations. If a question is unrelated to the current weather, "
-        "such as a forecast for tomorrow, politely inform the user that you can "
-        "only assist with current weather-related topics."
-    )
-    chatbot = ChatBot(tool_manager, client, system_instruction)
+    chatbot = ChatBot(tool_manager, client, SYSTEM_INSTRUCTION)
 
-    # Welcome message and interaction loop
-    print("🌦️ Hi! Welcome to the Weather Chatbot! 🌟")
-    print("I'm here to help you with all your weather-related questions.")
-    print("\nHere are some things you can ask me:")
-    print("- 'What is the weather like in Copenhagen?'")
-    print("- 'What should I wear in Athens today?'")
-    print("- 'What tires should I use in Helsinki today?'")
-    print("- 'What is the temperature in China's 5 biggest cities today?'")
-    print("\n💡 Type 'exit' at any time to quit the chat.")
-    print("Let's get started! 🌈")
+    # Display the greeting message
+    print(GREETING_MESSAGE)
 
+    # Start the chatbot interaction loop
     while True:
         user_input = input("\nYou: ").strip()
         if user_input.lower() == "exit":

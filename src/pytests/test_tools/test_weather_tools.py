@@ -1,51 +1,62 @@
-from src.tools.weather_tools import get_weather, get_temperature
-from unittest.mock import patch
+import requests
+from unittest.mock import patch, Mock
+from src.tools.weather_tools import (
+    get_current_weather,
+)
 
-# Mock data for testing
-MOCK_WEATHER_RESPONSE = {
-    "current": {
-        "condition": {"text": "Sunny"},
-        "temp_c": 25,
+
+def test_get_current_weather_success():
+    """Test successful retrieval of weather data."""
+    mock_response = Mock()
+    mock_response.status_code = 200
+    mock_response.json.return_value = {
+        "current": {
+            "temp_c": 22.5,
+            "condition": {"text": "Sunny"},
+        }
     }
-}
 
-MOCK_ERROR_RESPONSE = {
-    "error": "Error fetching weather data: 404"
-}
+    with patch("requests.get", return_value=mock_response):
+        api_key = "test_api_key"
+        location = "Copenhagen"
+        result = get_current_weather(location, api_key)
 
-# Test get_weather function
-def test_get_weather_success():
-    with patch("src.tools.weather_tools.fetch_weather_data") as mock_fetch:
-        # Mock the fetch_weather_data return value
-        mock_fetch.return_value = MOCK_WEATHER_RESPONSE
-
-        result = get_weather("New York", "dummy_api_key")
-        assert result == "Weather in New York: Sunny."
+    assert result == {
+        "temp_c": 22.5,
+        "condition": {"text": "Sunny"},
+    }
 
 
-def test_get_weather_error():
-    with patch("src.tools.weather_tools.fetch_weather_data") as mock_fetch:
-        # Mock an error response
-        mock_fetch.return_value = MOCK_ERROR_RESPONSE
+def test_get_current_weather_failure_http_error():
+    """Test behavior when an HTTP error occurs."""
+    with patch("requests.get", side_effect=requests.HTTPError("HTTP Error")):
+        api_key = "test_api_key"
+        location = "Copenhagen"
+        result = get_current_weather(location, api_key)
 
-        result = get_weather("InvalidCity", "dummy_api_key")
-        assert result == MOCK_ERROR_RESPONSE["error"]
-
-
-# Test get_temperature function
-def test_get_temperature_success():
-    with patch("src.tools.weather_tools.fetch_weather_data") as mock_fetch:
-        # Mock the fetch_weather_data return value
-        mock_fetch.return_value = MOCK_WEATHER_RESPONSE
-
-        result = get_temperature("New York", "dummy_api_key")
-        assert result == "Temperature in New York: 25°C."
+    assert "error" in result
+    assert "HTTP Error" in result["error"]
 
 
-def test_get_temperature_error():
-    with patch("src.tools.weather_tools.fetch_weather_data") as mock_fetch:
-        # Mock an error response
-        mock_fetch.return_value = MOCK_ERROR_RESPONSE
+def test_get_current_weather_failure_connection_error():
+    """Test behavior when a connection error occurs."""
+    with patch(
+        "requests.get", side_effect=requests.ConnectionError("Connection Error")
+    ):
+        api_key = "test_api_key"
+        location = "Copenhagen"
+        result = get_current_weather(location, api_key)
 
-        result = get_temperature("InvalidCity", "dummy_api_key")
-        assert result == MOCK_ERROR_RESPONSE["error"]
+    assert "error" in result
+    assert "Connection Error" in result["error"]
+
+
+def test_get_current_weather_failure_timeout():
+    """Test behavior when a timeout occurs."""
+    with patch("requests.get", side_effect=requests.Timeout("Timeout Error")):
+        api_key = "test_api_key"
+        location = "Copenhagen"
+        result = get_current_weather(location, api_key)
+
+    assert "error" in result
+    assert "Timeout Error" in result["error"]

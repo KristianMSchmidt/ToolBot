@@ -11,14 +11,19 @@ class ChatBot:
     def __init__(self, tool_manager: ToolManager, client: Any):
         self.client = client
         self.tool_manager = tool_manager
+
         self.chat_history = [
             {
                 "role": "system",
                 "content": (
-                    "You are an assistant specializing in answering questions about "
-                    "the weather and temperature for various locations. If a question "
-                    "involves weather or temperature, use the provided tools to "
-                    "fetch the information."
+                    "You are an assistant specializing in answering questions related "
+                    "to the weather for various locations. Your expertise includes not "
+                    "just providing weather facts, but also offering practical advice, "
+                    "such as the type of tires to use given the weather conditions. "
+                    "If a question involves weather or temperature, use the provided "
+                    "tools to fetch the information. Start with concise answers, "
+                    "avoiding excessive details, but let the user know you can "
+                    "provide more information if needed."
                 ),
             }
         ]

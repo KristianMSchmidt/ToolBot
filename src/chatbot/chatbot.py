@@ -70,9 +70,10 @@ class ChatBot:
             # Add the tool calls message to the chat history
             self.chat_history.append(message)
 
+            # Handle tool calls
             self.handle_tool_calls(message.tool_calls)
 
-            # Generate another model response using the updated chat history
+            # Generate model response using updated chat history
             completion = self.client.chat.completions.create(
                 model="gpt-4o",
                 messages=self.chat_history,

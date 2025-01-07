@@ -1,8 +1,6 @@
 import requests
 from unittest.mock import patch, Mock
-from src.tools.weather_tools import (
-    get_current_weather,
-)
+from src.tools.weather_tools import get_current_weather
 
 
 def test_get_current_weather_success():

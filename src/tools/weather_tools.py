@@ -26,3 +26,44 @@ def get_current_weather(location: str, api_key: str) -> dict:
         return data.get("current", {})
     except requests.RequestException as e:
         return {"error": f"Error fetching weather data: {e}"}
+
+
+def get_todays_weather_alerts(api_key, location):
+    """
+    Fetches weather alerts for today using the WeatherAPI.
+
+    Args:
+        api_key (str): Your WeatherAPI key.
+        location (str): The location to get alerts for (city, coordinates, or zip code).
+
+    Returns:
+        list: A list of simplified alerts for today.
+    """
+    base_url = "http://api.weatherapi.com/v1/forecast.json"
+    params = {"key": api_key, "q": location, "days": 1, "alerts": "yes"}
+
+    try:
+        # Make the API request
+        response = requests.get(base_url, params=params)
+        response.raise_for_status()
+        data = response.json()
+
+        # Get current date and alerts
+        alerts = data.get("alerts", {}).get("alert", [])
+
+        # Filter and simplify alerts
+        todays_alerts = [
+            {
+                "headline": alert.get("headline"),
+                "event": alert.get("event"),
+                "severity": alert.get("severity"),
+                "areas": alert.get("areas"),
+                "effective": alert.get("effective"),
+                "expires": alert.get("expires"),
+            }
+            for alert in alerts
+        ]
+
+        return todays_alerts
+    except requests.RequestException as e:
+        return {"error": f"Error fetching weather alerts: {e}"}

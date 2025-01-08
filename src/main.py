@@ -1,36 +1,31 @@
-import importlib
-from src.config.utils import list_available_bots
 from src.interface.cli import display_available_bots, get_bot_selection
 from src.chatbot.tool_manager import ToolManager
 from src.chatbot.chatbot import ChatBot
 from src.helpers.authenticate import get_client
+from src.bot_config.available_bots import AVAILABLE_BOTS
+from src.bot_config.utils import load_bot_config
 
 
 def main():
-    # Discover available bots
-    available_bots = list_available_bots()
-    if not available_bots:
+
+    if not AVAILABLE_BOTS:
         print("No bot configurations found. Exiting.")
         return
 
     # Interact with the user to select a bot
-    display_available_bots(available_bots)
-    bot_name = get_bot_selection(available_bots)
+    display_available_bots(AVAILABLE_BOTS)
+    bot_name = get_bot_selection(AVAILABLE_BOTS)
 
-    # Load the selected bot's configuration
-    try:
-        bot_config = importlib.import_module(f"src.config.bot_config.{bot_name}_config")
-    except ModuleNotFoundError:
-        print(f"Error: Bot configuration '{bot_name}_config' not found.")
-        return
+    # Load the selected bot configuration
+    bot_config = load_bot_config(bot_name)
 
     # Initialize components
-    tool_manager = ToolManager(tool_config=bot_config.TOOLS)
+    tool_manager = ToolManager(tool_config=bot_config.tools)
     client = get_client()
-    chatbot = ChatBot(tool_manager, client, bot_config.SYSTEM_INSTRUCTION)
+    chatbot = ChatBot(tool_manager, client, bot_config.system_instruction)
 
     # Display a welcome message and start the chatbot
-    print(f"\n{bot_config.GREETING_MESSAGE}")
+    print(f"\n{bot_config.greeting_message}")
     run_chatbot(chatbot)
 
 

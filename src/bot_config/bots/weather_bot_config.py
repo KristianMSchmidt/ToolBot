@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from src.tools.weather_tools import get_current_weather, get_todays_weather_alerts
-from src.bot_config.base_config import BotConfig
+from src.bot_config.base_bot_config import BotConfig
 
 # Load environment variables
 load_dotenv()
@@ -32,7 +32,7 @@ weather_bot_config = BotConfig(
     💡 Type 'exit' at any time to quit the chat.
     Let's get started! 🌈
     """,
-    tools=[
+    tool_config=[
         {
             "name": "get_current_weather",
             "description": (

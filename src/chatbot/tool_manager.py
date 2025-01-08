@@ -24,7 +24,7 @@ class ToolManager:
         """
         for tool in tool_config:
             self.define_tool(
-                tool["name"], tool["description"], tool["parameters"], tool["function"]
+                tool.name, tool.description, tool.parameters, tool.function
             )
 
     def define_tool(

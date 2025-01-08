@@ -1,5 +1,6 @@
 from pydantic import BaseModel
-from typing import List, Dict
+from typing import List
+from src.bot_config.base_tool_config import ToolConfig
 
 
 class BotConfig(BaseModel):
@@ -10,4 +11,4 @@ class BotConfig(BaseModel):
     name: str
     system_instruction: str
     greeting_message: str
-    tools: List[Dict]
+    tool_config: List[ToolConfig]

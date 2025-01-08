@@ -20,7 +20,7 @@ def main():
     bot_config = load_bot_config(bot_name)
 
     # Initialize components
-    tool_manager = ToolManager(tool_config=bot_config.tools)
+    tool_manager = ToolManager(tool_config=bot_config.tool_config)
     client = get_client()
     chatbot = ChatBot(tool_manager, client, bot_config.system_instruction)
 

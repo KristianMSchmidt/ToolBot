@@ -1,5 +1,5 @@
 import importlib
-from src.bot_config.base_config import BotConfig
+from src.bot_config.base_bot_config import BotConfig
 
 
 def load_bot_config(bot_name: str) -> BotConfig:

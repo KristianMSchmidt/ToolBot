@@ -6,13 +6,17 @@ calculator_bot_config = BotConfig(
     name="Calculator Chatbot",
     system_instruction=(
         "You are an assistant specializing in calculating sine(x) and exp(x) using the "
-        "provided tools. "
+        "provided tools. Never estimate sine(x) or exp(x) without using the tools."
+        "When given question that requires chaining multiple tools, such as "
+        "exp(sine(4)) we are only interested in the final result (after applying both "
+        "tools), not the intermediate (in this case sine(4))."
     ),
     greeting_message="""
     Hi! Welcome to the Calculator Chatbot!
     Here are some things you can ask me:
     - 'sine(x)': Calculate the sine of a number x.
     - 'exp(x)': Calculate the exponential of a number x.
+    - 'sin(exp(4.13))
     Type 'exit' at any time to quit the chat.
     Let's get started! "
     """,

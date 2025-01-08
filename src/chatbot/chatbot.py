@@ -40,27 +40,23 @@ class ChatBot:
         """
         Process tool calls and append results to the chat history.
         """
-        breakpoint()
         for tool_call in tool_calls:
             function_name = tool_call.function.name
-            arguments = json.loads(
-                tool_call.function.arguments
-            )  # Parse the arguments dynamically
-
+            arguments = json.loads(tool_call.function.arguments)
             # Call the function and get the result
             result = self.tool_manager.call_function(function_name, arguments)
 
-            # Dynamically create the tool message content
+            # Create the tool message content
             tool_message_content = {
-                "arguments": arguments,  # Include all arguments passed
-                "result": result,  # Include the result of the tool call
+                "arguments": arguments,
+                "result": result,
             }
 
             # Add the tool message to the chat history
             self.add_message(
                 "tool",
-                json.dumps(tool_message_content),  # Serialize the content as JSON
-                tool_call.id,  # Reference the tool_calls ID
+                json.dumps(tool_message_content),
+                tool_call.id,
             )
 
     def process_user_input(self, user_input: str):
@@ -69,33 +65,27 @@ class ChatBot:
         """
         self.add_message("user", user_input)
 
-        # Generate model response
-        completion = self.client.chat.completions.create(
-            model="gpt-4o",
-            messages=self.chat_history,
-            tools=self.tool_manager.tools,
-        )
-        message = completion.choices[0].message
-
-        # Check if there are tool calls
-        if hasattr(message, "tool_calls") and message.tool_calls:
-
-            # Add the tool calls message to the chat history
-            self.chat_history.append(message)
-
-            # Handle tool calls
-            self.handle_tool_calls(message.tool_calls)
-
-            # Generate model response using updated chat history
+        while True:
+            # Call ChatGPT API with messages so far
             completion = self.client.chat.completions.create(
                 model="gpt-4o",
                 messages=self.chat_history,
+                tools=self.tool_manager.tools,
             )
-            assistant_response = completion.choices[0].message.content
-            self.add_message("assistant", assistant_response)
-            return assistant_response
-        elif message.content:
-            self.add_message("assistant", message.content)
-            return message.content
-        else:
-            return "Error: Assistant response was empty or invalid."
+            message = completion.choices[0].message
+
+            # Check if AI wants to use our tools
+            if message.tool_calls:
+
+                # Add the tool calls message to the chat history
+                self.chat_history.append(message)
+
+                # Handle tool calls
+                self.handle_tool_calls(message.tool_calls)
+
+            elif message.content:
+                # Append asistants final message to chat history
+                self.add_message("assistant", message.content)
+                return message.content
+            else:
+                return "Error: Assistant response was empty or invalid."

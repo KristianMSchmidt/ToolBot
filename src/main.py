@@ -29,7 +29,7 @@ def main():
     run_chatbot(chatbot)
 
 
-def run_chatbot(chatbot):
+def run_chatbot(chatbot: ChatBot):
     """
     Run the chatbot interaction loop.
     """

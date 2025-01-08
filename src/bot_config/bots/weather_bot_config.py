@@ -17,7 +17,7 @@ weather_bot_config = BotConfig(
         "You are an assistant specializing in questions about the current weather, "
         "such as temperature, wind, or what to wear based on current conditions. "
         "Your expertise is limited to providing details about the current weather "
-        "for various locations."
+        "for various locations (you can't do forecasting)."
     ),
     greeting_message="""
     🌦️ Hi! Welcome to the Weather Chatbot! 🌟

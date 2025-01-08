@@ -40,13 +40,26 @@ class ChatBot:
         """
         Process tool calls and append results to the chat history.
         """
+        breakpoint()
         for tool_call in tool_calls:
             function_name = tool_call.function.name
-            arguments = json.loads(tool_call.function.arguments)
+            arguments = json.loads(
+                tool_call.function.arguments
+            )  # Parse the arguments dynamically
+
+            # Call the function and get the result
             result = self.tool_manager.call_function(function_name, arguments)
+
+            # Dynamically create the tool message content
+            tool_message_content = {
+                "arguments": arguments,  # Include all arguments passed
+                "result": result,  # Include the result of the tool call
+            }
+
+            # Add the tool message to the chat history
             self.add_message(
                 "tool",
-                json.dumps({"location": arguments["location"], "result": result}),
+                json.dumps(tool_message_content),  # Serialize the content as JSON
                 tool_call.id,  # Reference the tool_calls ID
             )
 

@@ -1,6 +1,7 @@
 from typing import Any, Dict, Callable, List
 
 from src.logging_config import setup_logging
+from src.bot_config.base_tool_config import ToolConfig
 
 logger = setup_logging()
 
@@ -10,7 +11,7 @@ class ToolManager:
     Manages tool definitions and function dispatching.
     """
 
-    def __init__(self, tool_config: List[Dict[str, Any]]):
+    def __init__(self, tool_config: List[ToolConfig]):
         """
         Initialize the ToolManager with tools from a configuration.
         """
@@ -18,7 +19,7 @@ class ToolManager:
         self.function_map = {}
         self._register_tools(tool_config)
 
-    def _register_tools(self, tool_config: List[Dict[str, Any]]):
+    def _register_tools(self, tool_config: List[ToolConfig]):
         """
         Register tools based on a configuration file.
         """

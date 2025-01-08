@@ -75,8 +75,7 @@ class ChatBot:
             message = completion.choices[0].message
 
             # Check if AI wants to use our tools
-            if message.tool_calls:
-
+            if message.tool_calls is not None:
                 # Add the tool calls message to the chat history
                 self.chat_history.append(message)
 

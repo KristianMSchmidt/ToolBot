@@ -1,17 +1,17 @@
 from src.chatbot.tool_manager import ToolManager
+from src.bot_config.base_tool_config import ToolConfig
 
 
 # Test the initialization of ToolManager
 def test_tool_manager_initialization():
     tool_config = [
-        {
-            "name": "test_tool",
-            "description": "A test tool",
-            "parameters": {"type": "object", "properties": {}},
-            "function": lambda: "test result",
-        }
+        ToolConfig(
+            name='test_tool',
+            description="A test tool",
+            parameters={"type": "object", "properties": {}},
+            function=lambda: "test result",
+        )
     ]
-
     tool_manager = ToolManager(tool_config)
 
     # Check if the tool is registered

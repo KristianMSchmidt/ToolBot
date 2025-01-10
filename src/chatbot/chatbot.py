@@ -27,15 +27,6 @@ class ChatBot:
             }
         ]
 
-    def add_message(self, role: str, content: str, tool_call_id: str = None):
-        """
-        Add a message to the chat history.
-        """
-        message = {"role": role, "content": content}
-        if tool_call_id:
-            message["tool_call_id"] = tool_call_id
-        self.chat_history.append(message)
-
     def handle_tool_calls(self, tool_calls: List[Dict[str, Any]]):
         """
         Process tool calls and append results to the chat history.
@@ -43,27 +34,32 @@ class ChatBot:
         for tool_call in tool_calls:
             function_name = tool_call.function.name
             arguments = json.loads(tool_call.function.arguments)
+
             # Call the function and get the result
             result = self.tool_manager.call_function(function_name, arguments)
 
             # Create the tool message content
-            tool_message_content = {
-                "arguments": arguments,
-                "result": result,
-            }
+            tool_message_content = json.dumps(
+                {
+                    "arguments": arguments,
+                    "result": result,
+                }
+            )
 
             # Add the tool message to the chat history
-            self.add_message(
-                "tool",
-                json.dumps(tool_message_content),
-                tool_call.id,
+            self.chat_history.append(
+                {
+                    'role': "tool",
+                    'content': tool_message_content,
+                    'tool_call_id': tool_call.id,
+                }
             )
 
     def process_user_input(self, user_input: str):
         """
         Process user input and handle tool calls if needed.
         """
-        self.add_message("user", user_input)
+        self.chat_history.append({'role': "user", 'content': user_input})
 
         while True:
             # Call ChatGPT API with messages so far
@@ -84,7 +80,9 @@ class ChatBot:
 
             elif message.content:
                 # Append asistants final message to chat history
-                self.add_message("assistant", message.content)
+                self.chat_history.append(
+                    {'role': 'assistant', 'content': message.content}
+                )
                 return message.content
             else:
                 return "Error: Assistant response was empty or invalid."

@@ -17,25 +17,6 @@ def test_chatbot_initialization():
     assert chatbot.chat_history[0]["role"] == "system"
 
 
-def test_add_message():
-    mock_tool_manager = MagicMock(spec=ToolManager)
-    mock_client = MagicMock()
-
-    chatbot = ChatBot(
-        tool_manager=mock_tool_manager, client=mock_client, system_instruction=""
-    )
-
-    chatbot.add_message("user", "Hello!")
-    chatbot.add_message("assistant", "Hi there!", tool_call_id="123")
-
-    assert len(chatbot.chat_history) == 3
-    assert chatbot.chat_history[1]["role"] == "user"
-    assert chatbot.chat_history[1]["content"] == "Hello!"
-    assert chatbot.chat_history[2]["role"] == "assistant"
-    assert chatbot.chat_history[2]["content"] == "Hi there!"
-    assert chatbot.chat_history[2]["tool_call_id"] == "123"
-
-
 def test_handle_tool_calls():
     mock_tool_manager = MagicMock(spec=ToolManager)
     mock_tool_manager.call_function.return_value = "Sunny in New York"

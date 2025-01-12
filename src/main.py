@@ -3,7 +3,6 @@ from src.chatbot.tool_manager import ToolManager
 from src.chatbot.chatbot import ChatBot
 from src.helpers.authenticate import get_client
 from src.bot_config.available_bots import AVAILABLE_BOTS
-from src.bot_config.utils import load_bot_config
 
 
 def main():
@@ -14,10 +13,7 @@ def main():
 
     # Interact with the user to select a bot
     display_available_bots(AVAILABLE_BOTS)
-    bot_name = get_bot_selection(AVAILABLE_BOTS)
-
-    # Load the selected bot configuration
-    bot_config = load_bot_config(bot_name)
+    bot_config = get_bot_selection(AVAILABLE_BOTS)
 
     # Initialize components
     tool_manager = ToolManager(tool_config=bot_config.tool_config)

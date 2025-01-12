@@ -9,6 +9,6 @@ class BotConfig(BaseModel):
     """
 
     name: str
-    system_instruction: str
-    greeting_message: str
-    tool_config: List[ToolConfig]
+    system_instruction: str = "You are a helpful assistant"
+    greeting_message: str = "How can I help you?"
+    tool_config: List[ToolConfig] = []

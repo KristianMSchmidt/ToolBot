@@ -3,8 +3,8 @@ def display_available_bots(available_bots):
     Display a numbered list of available bots.
     """
     print("Available chatbots:")
-    for idx, bot_name in enumerate(available_bots, 1):
-        print(f"{idx}. {bot_name.replace('_', ' ').title()}")
+    for idx, bot in enumerate(available_bots, 1):
+        print(f"{idx}. {bot.name}")
 
 
 def get_bot_selection(available_bots):

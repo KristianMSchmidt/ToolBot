@@ -69,7 +69,7 @@ class ToolManager:
             result = function(**arguments)
 
             # Log the successful result
-            logger.info(f"Function '{function_name}' returned: {result}")
+            logger.info(f"Function '{function_name}' returned: {result}"[:150])
             return result
         except Exception as e:
             # Log the error

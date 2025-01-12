@@ -1,7 +1,7 @@
-from src.tools.smk_tools.get_artworks import (
+from src.tools.smk_tools.get_artworks_by_object_number import (
     get_artworks_by_object_numbers,
-    get_artworks_by_search,
 )
+from src.tools.smk_tools.get_artworks_by_search import get_artworks_by_search
 from src.bot_config.base_bot_config import BotConfig
 
 # SMK bot configuration
@@ -40,9 +40,7 @@ smk_bot_config = BotConfig(
         {
             'name': get_artworks_by_search.__name__,
             'description': (
-                "Search the SMK art collection using search words. "
-                "The more words you include, the narrower the search results will be. "
-                "This tool fetches artworks with specified keywords, ensuring results have images, are paintings, and are in the public domain."
+                "Call this if the user wants to search in the SMK art collection."
             ),
             'parameters': {
                 'type': 'object',
@@ -57,6 +55,18 @@ smk_bot_config = BotConfig(
                     },
                     'creator_nationality': {
                         'type': 'string',
+                        "enum": [
+                            "dansk",
+                            "svensk",
+                            "norsk",
+                            "tysk",
+                            "engelsk",
+                            "fransk",
+                            "hollandsk",
+                            "nederlansk",
+                            "spansk",
+                            "italiensk",
+                        ],
                         'description': 'The nationality of the artist (such as "svensk" eller "nederlandsk"). Should be in Danish',
                     },
                 },

@@ -1,7 +1,7 @@
 
 # Flexible OpenAI Function-Calling Chatbot
 
-This project is a learning-focused implementation of a chatbot that uses OpenAI's function-calling capabilities. The structure is designed to be flexible, allowing for easy customization of tools and system behavior. While the project includes two specific examples (a weather bot using a weather-related API and a calculator bot), its architecture supports integration with a variety of tools and APIs for other use cases.
+This project is a learning-focused implementation of a chatbots that use OpenAI's function-calling capabilities. The structure is designed to be flexible, allowing for easy customization of tools and system behavior. While the project includes two specific examples (a weather bot using a weather-related API and a calculator bot), its architecture supports integration with a variety of tools and APIs for other use cases.
 
 ## Features
 
@@ -40,7 +40,7 @@ This project is a learning-focused implementation of a chatbot that uses OpenAI'
 
 ## Example Use
 
-While this project includes configurations for two specific chatbots with each their set of tools, the modular design makes it straightforward to replace or add custom chatbots with tools for other domains like finance, travel, or customer support. Simply configure the new chatbot and its tool, and it should work right out of the box. 
+While this project includes configurations for two specific chatbots with each their set of tools, the modular design makes it straightforward to replace or add custom chatbots with tools for other domains like finance, travel, or customer support. Simply configure the new chatbot and its tool, and it should work right out of the box.
 
 ## Contributions and Feedback
 

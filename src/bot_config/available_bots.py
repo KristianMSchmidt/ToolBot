@@ -8,5 +8,4 @@ AVAILABLE_BOTS = [
     chat_gpt_default_config,
     calculator_bot_config,
     weather_bot_config,
-    # smk_bot_config,
 ]

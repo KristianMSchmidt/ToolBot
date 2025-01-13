@@ -10,7 +10,6 @@ API_KEY = os.getenv("WEATHER_API_KEY")
 if not API_KEY:
     raise EnvironmentError("Missing required environment variable: WEATHER_API_KEY")
 
-# Weather bot configuration
 weather_bot_config = BotConfig(
     name="Weather Chatbot",
     system_instruction=(
@@ -34,10 +33,8 @@ weather_bot_config = BotConfig(
     """,
     tool_config=[
         {
-            "name": "get_current_weather",
-            "description": (
-                "Retrieve the current weather details for a specific location."
-            ),
+            "name": get_current_weather.__name__,
+            "description": get_current_weather.__doc__,
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -52,8 +49,8 @@ weather_bot_config = BotConfig(
             "function": lambda location: get_current_weather(location, API_KEY),
         },
         {
-            "name": "get_todays_weather_alerts",
-            "description": "Retrieve today's weather alerts for a specific location.",
+            "name": get_todays_weather_alerts.__name__,
+            "description": get_todays_weather_alerts.__doc__,
             "parameters": {
                 "type": "object",
                 "properties": {

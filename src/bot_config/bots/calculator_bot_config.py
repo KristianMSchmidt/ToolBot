@@ -22,8 +22,8 @@ calculator_bot_config = BotConfig(
     """,
     tool_config=[
         ToolConfig(
-            name="sine_function",
-            description="Calculate sine(x) for a given value of x.",
+            name=sine_function.__name__,
+            description=sine_function.__doc__,
             parameters={
                 "type": "object",
                 "properties": {
@@ -39,8 +39,8 @@ calculator_bot_config = BotConfig(
             function=sine_function,
         ),
         ToolConfig(
-            name="exponential_function",
-            description="Calculate exp(x) for a given value of x.",
+            name=exponential_function.__name__,
+            description=exponential_function.__doc__,
             parameters={
                 "type": "object",
                 "properties": {

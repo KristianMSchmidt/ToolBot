@@ -55,6 +55,22 @@ class ChatBot:
                 }
             )
 
+    def call_model_with_messages(self, messages, tools=None):
+        """
+        Call the ChatGPT API with the given messages and tools.
+        """
+        model_args = {
+            "model": "gpt-4o",
+            "messages": messages,
+        }
+
+        if tools:
+            model_args["tools"] = tools
+
+        completion = self.client.chat.completions.create(**model_args)
+
+        return completion.choices[0].message
+
     def process_user_input(self, user_input: str):
         """
         Process user input and handle tool calls if needed.
@@ -62,13 +78,11 @@ class ChatBot:
         self.chat_history.append({'role': "user", 'content': user_input})
 
         while True:
+
             # Call ChatGPT API with messages so far
-            completion = self.client.chat.completions.create(
-                model="gpt-4o",
-                messages=self.chat_history,
-                tools=self.tool_manager.tools,
+            message = self.call_model_with_messages(
+                self.chat_history, self.tool_manager.tools
             )
-            message = completion.choices[0].message
 
             # Check if AI wants to use our tools
             if message.tool_calls is not None:
